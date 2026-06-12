@@ -1,0 +1,45 @@
+// Prisma schema for the Member & Contribution Tracker.
+// Two tables instead of 48 monthly columns: clean, queryable, exportable.
+// Draft — finalize against context/architecture.md before migrating.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Person {
+  id         String   @id @default(cuid())
+  name       String
+  fatherName String
+  address    String?
+  whatsappNo String
+  simNo      String?
+  department String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  payments Payment[]
+
+  @@index([department])
+}
+
+model Payment {
+  id           String    @id @default(cuid())
+  person       Person    @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId     String
+  month        String // "2026-01"
+  amount       Decimal?  @db.Decimal(10, 2)
+  dateReceived DateTime?
+  msgSent      Boolean   @default(false)
+  notified     Boolean   @default(false)
+  reminderDate DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([personId, month]) // one payment row per person per month
+  @@index([month])
+}
