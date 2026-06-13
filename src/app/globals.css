@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg-base: #f8fafc;
+  --bg-surface: #ffffff;
+  --text-primary: #0f172a;
+  --text-muted: #64748b;
+  --accent-primary: #2563eb;
+  --border-default: #e2e8f0;
+  --state-error: #dc2626;
+  --state-success: #16a34a;
+  --state-warning: #d97706;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+}

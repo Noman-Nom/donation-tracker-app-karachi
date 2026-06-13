@@ -4,20 +4,29 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Phase 0 — Scaffold & specs complete. Ready to start Phase 1.
+- Phase 2 complete. Ready to start Phase 3 (reminders + filters + export).
 
 ## Current Goal
 
-- Finalize specs, then build Member management (create + list).
+- Build Phase 3: daily reminder check, filters, and Excel export.
 
 ## Completed
 
 - Project scaffold (Next.js 15 + TS + Tailwind + Prisma + Baileys deps).
 - `npm install` done.
-- Prisma schema drafted: `Person` + `Payment` (one payment per member/month).
+- Prisma schema: `Person` + `Payment` (one payment per member/month),
+  with `directUrl` configured for Neon migrations.
 - `.gitignore`, `.env.example`, README created.
 - WhatsApp boundary stub (`src/lib/whatsapp.ts`) with simulate mode.
 - All six context files filled in; CLAUDE.md rewritten as entry point.
+- Neon Postgres connected; initial migration applied (tables created).
+- Phase 1 — Member management: `GET`/`POST /api/persons` (zod-validated),
+  add-member form + members table. Verified end to end. Build passes.
+- Phase 2 — Payment entry: `GET`/`POST /api/payments` (upsert, one per
+  member/month), payment form (member + month dropdown, amount, editable
+  Date Received), immediate WhatsApp confirmation (simulate), payments
+  table. Shared nav (Members / Payments). Verified end to end (POST 201,
+  msgSent true, confirmation logged, validation 400). Build passes.
 
 ## In Progress
 
@@ -25,12 +34,15 @@ Update this file after every meaningful implementation change.
 
 ## Next Up
 
-1. Run `npm run db:migrate` against a local Postgres to create tables.
-2. Phase 1 — Member management: `POST /api/persons`, `GET /api/persons`,
-   add-member form, members table.
-3. Phase 2 — Payment entry: `POST /api/payments`, payment form with
-   editable `Date Received`, confirmation message (simulate).
-4. Phase 3 — Reminder cron + filtering + Excel export.
+1. Phase 3a — Reminder logic: daily check after the 15th for unpaid
+   members → send reminder, set notified, record reminderDate.
+2. Phase 3b — Filters: by department, month, payment status, date range.
+3. Phase 3c — Excel export in the wide month-column format.
+
+## Notes for next session
+
+- A test member ("Ali Khan", Finance) exists in the DB from the Phase 1
+  smoke test — harmless sample data; delete when convenient.
 
 ## Open Questions
 
