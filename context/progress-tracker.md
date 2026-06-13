@@ -4,11 +4,12 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Phase 2 complete. Ready to start Phase 3 (reminders + filters + export).
+- Phase 3a (reminders) + 3c (export) complete. Remaining: filters (3b),
+  then a UI polish pass.
 
 ## Current Goal
 
-- Build Phase 3: daily reminder check, filters, and Excel export.
+- Build Phase 3b: filters (department, month, payment status, date range).
 
 ## Completed
 
@@ -28,16 +29,29 @@ Update this file after every meaningful implementation change.
   table. Shared nav (Members / Payments). Verified end to end (POST 201,
   msgSent true, confirmation logged, validation 400). Build passes.
 
+- Phase 3c — Excel export: `GET /api/export` builds a wide-format .xlsx
+  (54 cols: 6 base + 12 months × {Amount, Date, Msg, Notified}) via SheetJS.
+  "Export to Excel" button in the header. Verified (valid xlsx, 54 cols).
+- Phase 3a — Reminders: `runReminderCheck()` in src/server/cron/reminders.ts
+  (after-15th gate, force option), exposed via `POST /api/reminders/run`.
+  "Run reminder check" button + "Notified" column on Payments page.
+  Verified: sends to unpaid only, skips paid, idempotent on re-run.
+  Build passes.
+
 ## In Progress
 
 - None.
 
 ## Next Up
 
-1. Phase 3a — Reminder logic: daily check after the 15th for unpaid
-   members → send reminder, set notified, record reminderDate.
-2. Phase 3b — Filters: by department, month, payment status, date range.
-3. Phase 3c — Excel export in the wide month-column format.
+1. Phase 3b — Filters: by department, month, payment status, date range.
+2. UI polish pass (use the web-design-guidelines skill).
+
+## Notes
+
+- Reminder cron is manual-trigger only for the demo. For production, wire
+  `runReminderCheck()` to node-cron (needs a long-running server) or a
+  scheduled job / external cron hitting `POST /api/reminders/run`.
 
 ## Notes for next session
 

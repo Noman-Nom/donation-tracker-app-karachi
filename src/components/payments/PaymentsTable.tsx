@@ -21,18 +21,19 @@ export function PaymentsTable({
             <th className="px-4 py-3 font-medium">Amount</th>
             <th className="px-4 py-3 font-medium">Date Received</th>
             <th className="px-4 py-3 font-medium">Msg</th>
+            <th className="px-4 py-3 font-medium">Notified</th>
           </tr>
         </thead>
         <tbody>
           {loading ? (
             <tr>
-              <td colSpan={6} className="px-4 py-6 text-muted">
+              <td colSpan={7} className="px-4 py-6 text-muted">
                 Loading…
               </td>
             </tr>
           ) : payments.length === 0 ? (
             <tr>
-              <td colSpan={6} className="px-4 py-6 text-muted">
+              <td colSpan={7} className="px-4 py-6 text-muted">
                 No payments yet. Record one above.
               </td>
             </tr>
@@ -53,6 +54,13 @@ export function PaymentsTable({
                 <td className="px-4 py-3">
                   {p.msgSent ? (
                     <span className="text-success">Sent</span>
+                  ) : (
+                    <span className="text-muted">—</span>
+                  )}
+                </td>
+                <td className="px-4 py-3">
+                  {p.notified ? (
+                    <span className="text-warning">Reminded</span>
                   ) : (
                     <span className="text-muted">—</span>
                   )}

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { Payment, Person } from "@prisma/client";
 import { PaymentForm } from "./PaymentForm";
 import { PaymentsTable } from "./PaymentsTable";
+import { ReminderButton } from "./ReminderButton";
 
 type PaymentRow = Payment & { person: Person };
 
@@ -32,6 +33,7 @@ export function PaymentsClient() {
   return (
     <div className="space-y-6">
       <PaymentForm members={members} onCreated={loadPayments} />
+      <ReminderButton onComplete={loadPayments} />
       <PaymentsTable payments={payments} loading={loading} />
     </div>
   );

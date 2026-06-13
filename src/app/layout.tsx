@@ -26,6 +26,12 @@ export default function RootLayout({
                 Payments
               </Link>
             </nav>
+            <a
+              href="/api/export"
+              className="ml-auto rounded-md border border-line px-3 py-1.5 text-sm font-medium text-fg hover:border-accent hover:text-accent"
+            >
+              Export to Excel
+            </a>
           </div>
         </header>
         <main className="mx-auto max-w-5xl px-6 py-8">{children}</main>
