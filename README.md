@@ -22,7 +22,7 @@ WhatsApp confirmations and reminders, plus one-click Excel export.
 
 ```
 .
-├── CLAUDE.md                 # Entry rules — read context files in order
+├── CLAUDE.md                 ## Entry rules — read context files in order
 ├── context/                  # Spec files (overview, architecture, standards…)
 ├── prisma/
 │   └── schema.prisma         # Person + Payment models
