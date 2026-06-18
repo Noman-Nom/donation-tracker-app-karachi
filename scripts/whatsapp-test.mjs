@@ -11,11 +11,17 @@
 // Number format: Pakistani local numbers (03xx...) are auto-converted to
 // international (92xx...). Pass a full international number for other countries.
 
-import makeWASocket, {
-  useMultiFileAuthState,
-  DisconnectReason,
-} from "@whiskeysockets/baileys";
+import { webcrypto } from "node:crypto";
+// Baileys expects a global Web Crypto API; expose it for older Node versions.
+if (!globalThis.crypto) globalThis.crypto = webcrypto;
+
+import baileys from "@whiskeysockets/baileys";
 import qrcode from "qrcode-terminal";
+
+// Baileys is CommonJS — the socket factory is the default export.
+const makeWASocket = baileys.default;
+const { useMultiFileAuthState, DisconnectReason, fetchLatestBaileysVersion } =
+  baileys;
 
 const [, , rawNumber, ...messageParts] = process.argv;
 const message = messageParts.join(" ") || "Test message from Member Tracker ✅";
@@ -34,7 +40,9 @@ function toJid(raw) {
 
 async function main() {
   const { state, saveCreds } = await useMultiFileAuthState("auth_session");
-  const sock = makeWASocket({ auth: state });
+  const { version } = await fetchLatestBaileysVersion();
+  console.log("Using WhatsApp Web version:", version.join("."));
+  const sock = makeWASocket({ version, auth: state });
 
   sock.ev.on("creds.update", saveCreds);
 
