@@ -2,14 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CreditCard, Users } from "lucide-react";
+import { CreditCard, Users, Smartphone } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Icons are defined inside this client component so they never cross the
-// server/client boundary as props.
 const LINKS = [
   { href: "/", label: "Members", icon: Users },
   { href: "/payments", label: "Payments", icon: CreditCard },
+  { href: "/whatsapp", label: "WhatsApp", icon: Smartphone },
 ];
 
 export function NavBar() {

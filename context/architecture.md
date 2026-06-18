@@ -43,7 +43,12 @@
 - Baileys needs a long-lived connection (a QR-paired session that stays
   open). It must NOT run inside a Next.js request handler — the live
   integration is a separate WhatsApp worker process that `whatsapp.ts` talks
-  to. A working standalone reference is `scripts/whatsapp-test.mjs`.
+  to over HTTP.
+- Worker: `scripts/whatsapp-worker.mjs` (`npm run wa:worker`) keeps the
+  Baileys session alive (scan once → saved in `auth_session/`) and serves
+  `GET /status` and `POST /send {to,message}` on `WHATSAPP_WORKER_PORT`
+  (default 4000). In live mode, `whatsapp.ts` POSTs to `WHATSAPP_WORKER_URL`.
+  `scripts/whatsapp-test.mjs` remains a one-shot send reference.
 
 ## Auth and Access Model
 

@@ -51,14 +51,27 @@ Update this file after every meaningful implementation change.
   rings, aria-live messages, `prefers-reduced-motion`. Both pages render 200
   with no errors. Build passes.
 
+- Live WhatsApp worker: `scripts/whatsapp-worker.mjs` (`npm run wa:worker`)
+  keeps a persistent Baileys session and serves `GET /status` + `POST /send`
+  on port 4000. `whatsapp.ts` live mode POSTs there. Verified HTTP layer
+  (status, 503 when not connected, 400 on bad input); actual scan+delivery
+  is a manual step (needs a phone). Added `WHATSAPP_WORKER_URL` env.
+- WhatsApp settings page (`/whatsapp`): browser-based QR code scan. Worker
+  exposes `GET /qr` (uses `qrcode` pkg → PNG data URL). Next.js proxy API
+  routes at `/api/whatsapp/status` and `/api/whatsapp/qr`. Page auto-polls
+  every 3 s; shows QR image when awaiting scan, green Connected when live,
+  red Offline with `npm run wa:worker` hint when worker is down. NavBar
+  updated with WhatsApp link. Build passes.
+
 ## In Progress
 
 - None.
 
 ## Next Up
 
-1. Optional polish: wire real WhatsApp live mode (worker process), deploy
-   to Render/Railway, or resolve open questions (auth, month range).
+1. Optional: deploy (Render/Railway) — note the worker needs its own
+   long-running process + persisted `auth_session/`. Resolve open questions
+   (auth, month range).
 
 ## Notes
 
