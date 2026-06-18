@@ -1,4 +1,5 @@
 import type { Person } from "@prisma/client";
+import { Users } from "lucide-react";
 
 // Only the string-valued fields are shown as columns.
 type StringField =
@@ -26,43 +27,49 @@ export function MembersTable({
   loading: boolean;
 }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-line bg-surface">
-      <table className="w-full text-left text-sm">
-        <thead className="border-b border-line text-muted">
-          <tr>
-            {COLUMNS.map((c) => (
-              <th key={c.key} className="px-4 py-3 font-medium">
-                {c.label}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {loading ? (
+    <div className="glass-card overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-sm">
+          <thead className="border-b border-white/10 text-xs uppercase tracking-wide text-muted">
             <tr>
-              <td colSpan={COLUMNS.length} className="px-4 py-6 text-muted">
-                Loading…
-              </td>
+              {COLUMNS.map((c) => (
+                <th key={c.key} className="px-5 py-3.5 font-medium">
+                  {c.label}
+                </th>
+              ))}
             </tr>
-          ) : persons.length === 0 ? (
-            <tr>
-              <td colSpan={COLUMNS.length} className="px-4 py-6 text-muted">
-                No members yet. Add one above.
-              </td>
-            </tr>
-          ) : (
-            persons.map((p) => (
-              <tr key={p.id} className="border-b border-line last:border-0">
-                {COLUMNS.map((c) => (
-                  <td key={c.key} className="px-4 py-3 text-fg">
-                    {p[c.key] ?? "—"}
-                  </td>
-                ))}
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={COLUMNS.length} className="px-5 py-10 text-center text-muted">
+                  Loading…
+                </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : persons.length === 0 ? (
+              <tr>
+                <td colSpan={COLUMNS.length} className="px-5 py-12 text-center">
+                  <Users className="mx-auto mb-3 h-8 w-8 text-muted/60" aria-hidden="true" />
+                  <p className="text-muted">No members yet. Add one above.</p>
+                </td>
+              </tr>
+            ) : (
+              persons.map((p) => (
+                <tr
+                  key={p.id}
+                  className="border-b border-white/5 transition-colors duration-150 last:border-0 hover:bg-white/[0.04]"
+                >
+                  {COLUMNS.map((c) => (
+                    <td key={c.key} className="px-5 py-3.5 text-fg/90">
+                      {p[c.key] ?? "—"}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

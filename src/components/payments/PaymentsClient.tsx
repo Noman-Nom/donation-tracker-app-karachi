@@ -62,6 +62,15 @@ export function PaymentsClient() {
 
   return (
     <div className="space-y-6">
+      <div>
+        <h1 className="bg-gradient-to-r from-indigo-200 to-fuchsia-200 bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+          Payments
+        </h1>
+        <p className="mt-1 text-sm text-muted">
+          Record contributions and chase unpaid members.
+        </p>
+      </div>
+
       <PaymentForm members={members} onCreated={loadPayments} />
       <ReminderButton onComplete={loadPayments} />
       <PaymentFilters
@@ -70,7 +79,8 @@ export function PaymentsClient() {
         onChange={setFilters}
       />
       <p className="text-sm text-muted">
-        Showing {filtered.length} of {payments.length} payment(s)
+        Showing <span className="font-medium text-fg">{filtered.length}</span> of{" "}
+        {payments.length} payment(s)
       </p>
       <PaymentsTable payments={filtered} loading={loading} />
     </div>

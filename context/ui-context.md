@@ -2,30 +2,40 @@
 
 ## Theme
 
-Light, clean, professional admin theme — this is a data tool used by an
-admin to enter and read records, so clarity and legibility beat visual
-flair. White/neutral surfaces, a single calm accent for actions, and clear
-status colors for paid / unpaid / overdue.
+Glassy, gradient, interactive dark theme. A deep gradient backdrop (indigo →
+fuchsia → sky radial glows on a near-black base) with frosted-glass panels
+(`backdrop-blur`, translucent white surfaces, subtle borders). Light text,
+vibrant indigo→fuchsia gradient for primary actions, and colored status
+badges. Motion is subtle (fade-in, hover scale) and respects
+`prefers-reduced-motion`.
 
 ## Colors
 
-Define these as CSS custom properties in `src/app/globals.css`. All
-components use these tokens — no hardcoded hex values.
+Define these as CSS custom properties in `src/app/globals.css`. Text/state
+colors use tokens; glass surfaces use white/opacity utilities directly.
 
-| Role            | CSS Variable       | Value     |
-| --------------- | ------------------ | --------- |
-| Page background | `--bg-base`        | `#f8fafc` |
-| Surface         | `--bg-surface`     | `#ffffff` |
-| Primary text    | `--text-primary`   | `#0f172a` |
-| Muted text      | `--text-muted`     | `#64748b` |
-| Primary accent  | `--accent-primary` | `#2563eb` |
-| Border          | `--border-default` | `#e2e8f0` |
-| Error           | `--state-error`    | `#dc2626` |
-| Success         | `--state-success`  | `#16a34a` |
-| Warning         | `--state-warning`  | `#d97706` |
+| Role           | CSS Variable       | Value                      |
+| -------------- | ------------------ | -------------------------- |
+| Base bg        | (body)             | `#0a0e1f` + radial glows   |
+| Glass surface  | `--bg-surface`     | `rgba(255,255,255,0.06)`   |
+| Primary text   | `--text-primary`   | `#f1f5f9`                  |
+| Muted text     | `--text-muted`     | `#94a3b8`                  |
+| Accent (focus) | `--accent-primary` | `#818cf8`                  |
+| Border         | `--border-default` | `rgba(255,255,255,0.12)`   |
+| Error          | `--state-error`    | `#f87171`                  |
+| Success        | `--state-success`  | `#34d399`                  |
+| Warning        | `--state-warning`  | `#fbbf24`                  |
 
-Status meaning: paid = success, unpaid = muted, overdue (blank after the
-15th) = error (red row highlight).
+Primary action gradient: `from-indigo-500 to-fuchsia-500`.
+Status badges: paid/sent = emerald, reminded = amber.
+
+## Reusable component classes (globals.css)
+
+- `.glass-card` — frosted panel (blur, translucent, rounded-2xl, shadow).
+- `.input-field` — glass input with hover + `focus-visible` ring.
+- `.btn-primary` — gradient button with hover-scale / active-scale.
+- `.btn-ghost` — translucent secondary button.
+- `.badge` — pill for status labels.
 
 ## Typography
 

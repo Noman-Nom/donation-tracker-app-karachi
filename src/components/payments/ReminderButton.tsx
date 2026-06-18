@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { BellRing } from "lucide-react";
 
 export function ReminderButton({ onComplete }: { onComplete: () => void }) {
   const [loading, setLoading] = useState(false);
@@ -38,23 +39,29 @@ export function ReminderButton({ onComplete }: { onComplete: () => void }) {
   }
 
   return (
-    <div className="rounded-lg border border-line bg-surface p-6">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <h2 className="text-lg font-semibold text-fg">Reminders</h2>
-          <p className="text-sm text-muted">
-            Notify members who haven’t paid for the current month.
-          </p>
+    <div className="glass-card p-6">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-amber-400/15 text-amber-300">
+            <BellRing className="h-5 w-5" aria-hidden="true" />
+          </span>
+          <div>
+            <h2 className="text-lg font-semibold text-fg">Reminders</h2>
+            <p className="text-sm text-muted">
+              Notify members who haven’t paid for the current month.
+            </p>
+          </div>
         </div>
-        <button
-          onClick={run}
-          disabled={loading}
-          className="shrink-0 rounded-md bg-accent px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-        >
+        <button onClick={run} disabled={loading} className="btn-primary shrink-0">
+          <BellRing className="h-4 w-4" aria-hidden="true" />
           {loading ? "Running…" : "Run reminder check"}
         </button>
       </div>
-      {result && <p className="mt-3 text-sm text-success">{result}</p>}
+      {result && (
+        <p className="mt-4 text-sm text-success" aria-live="polite">
+          {result}
+        </p>
+      )}
     </div>
   );
 }

@@ -4,12 +4,11 @@ Update this file after every meaningful implementation change.
 
 ## Current Phase
 
-- Phase 3a (reminders) + 3c (export) complete. Remaining: filters (3b),
-  then a UI polish pass.
+- Complete: all features + UI polish pass. App is demo-ready.
 
 ## Current Goal
 
-- Build Phase 3b: filters (department, month, payment status, date range).
+- Optional: wire real WhatsApp (live mode), deploy, or address open questions.
 
 ## Completed
 
@@ -41,6 +40,16 @@ Update this file after every meaningful implementation change.
   Baileys and sends a real message after a one-time QR scan. Verified to the
   QR/handshake stage. Added dep `qrcode-terminal`; npm scripts `test:api`
   and `wa:test`. NOT yet wired into the app — app still uses simulate mode.
+- Phase 3b — Filters: client-side filtering of the Payments table by
+  department, month, status (paid / reminded), and date range, with a
+  "Showing X of Y" count and Clear button (`PaymentFilters.tsx`). Filter
+  predicate verified against sample data. Build passes.
+- UI polish pass — full glassy/gradient/interactive redesign following the
+  web-design-guidelines (Vercel) rules: glass-card/input-field/btn-primary
+  utility classes, gradient backdrop, sticky glass navbar with active state
+  (`NavBar.tsx`), lucide icons, status badges, empty states, focus-visible
+  rings, aria-live messages, `prefers-reduced-motion`. Both pages render 200
+  with no errors. Build passes.
 
 ## In Progress
 
@@ -48,8 +57,8 @@ Update this file after every meaningful implementation change.
 
 ## Next Up
 
-1. Phase 3b — Filters: by department, month, payment status, date range.
-2. UI polish pass (use the web-design-guidelines skill).
+1. Optional polish: wire real WhatsApp live mode (worker process), deploy
+   to Render/Railway, or resolve open questions (auth, month range).
 
 ## Notes
 

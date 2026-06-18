@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { UserPlus } from "lucide-react";
 
 const EMPTY = {
   name: "",
@@ -13,11 +14,17 @@ const EMPTY = {
 
 type Field = keyof typeof EMPTY;
 
-const FIELDS: { key: Field; label: string; required?: boolean }[] = [
+const FIELDS: {
+  key: Field;
+  label: string;
+  required?: boolean;
+  type?: string;
+  inputMode?: "text" | "tel";
+}[] = [
   { key: "name", label: "Name", required: true },
   { key: "fatherName", label: "Father Name", required: true },
-  { key: "whatsappNo", label: "WhatsApp No", required: true },
-  { key: "simNo", label: "SIM / Text No" },
+  { key: "whatsappNo", label: "WhatsApp No", required: true, type: "tel", inputMode: "tel" },
+  { key: "simNo", label: "SIM / Text No", type: "tel", inputMode: "tel" },
   { key: "department", label: "Department", required: true },
   { key: "address", label: "Address" },
 ];
@@ -55,35 +62,40 @@ export function MemberForm({ onCreated }: { onCreated: () => void }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="rounded-lg border border-line bg-surface p-6"
-    >
-      <h2 className="mb-4 text-lg font-semibold text-fg">Add Member</h2>
+    <form onSubmit={handleSubmit} className="glass-card animate-fade-in-up p-6">
+      <h2 className="mb-5 flex items-center gap-2 text-lg font-semibold text-fg">
+        <UserPlus className="h-5 w-5 text-indigo-300" aria-hidden="true" />
+        Add Member
+      </h2>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {FIELDS.map(({ key, label, required }) => (
-          <label key={key} className="flex flex-col gap-1 text-sm">
-            <span className="font-medium text-fg">
+        {FIELDS.map(({ key, label, required, type, inputMode }) => (
+          <div key={key} className="flex flex-col gap-1.5">
+            <label htmlFor={`member-${key}`} className="text-sm font-medium text-fg">
               {label}
               {required && <span className="text-error"> *</span>}
-            </span>
+            </label>
             <input
+              id={`member-${key}`}
+              type={type ?? "text"}
+              inputMode={inputMode}
+              spellCheck={false}
               value={form[key]}
               onChange={(e) => update(key, e.target.value)}
-              className="rounded-md border border-line bg-surface px-3 py-2 text-fg outline-none focus:border-accent"
+              className="input-field"
             />
-          </label>
+          </div>
         ))}
       </div>
 
-      {error && <p className="mt-4 text-sm text-error">{error}</p>}
+      {error && (
+        <p className="mt-4 text-sm text-error" aria-live="polite">
+          {error}
+        </p>
+      )}
 
-      <button
-        type="submit"
-        disabled={saving}
-        className="mt-5 rounded-md bg-accent px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
-      >
+      <button type="submit" disabled={saving} className="btn-primary mt-6">
+        <UserPlus className="h-4 w-4" aria-hidden="true" />
         {saving ? "Saving…" : "Add Member"}
       </button>
     </form>
