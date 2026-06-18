@@ -41,4 +41,6 @@ npm run dev          # start dev server (localhost:3000)
 npm run build        # production build (must pass before moving on)
 npm run db:migrate   # apply Prisma schema to the database
 npm run db:studio    # browse the database
+npm run test:api     # smoke-test the API (dev server must be running)
+npm run wa:test      # send a real WhatsApp message via Baileys (QR scan)
 ```

@@ -21,6 +21,9 @@
   `whatsapp.ts` (messaging boundary), `utils.ts`.
 - `src/server/` — business logic (`services/`) and scheduled jobs (`cron/`).
 - `prisma/` — schema and migrations.
+- `scripts/` — standalone utilities run with `node`/npm, outside Next.js:
+  `test-api.mjs` (`npm run test:api`) and `whatsapp-test.mjs`
+  (`npm run wa:test`, real Baileys send proof).
 
 ## Storage Model
 
@@ -37,6 +40,10 @@
 - `WHATSAPP_MODE=simulate` (default) logs the message and sends nothing.
 - `WHATSAPP_MODE=live` sends via Baileys. Switching modes must not require
   changes anywhere except this module.
+- Baileys needs a long-lived connection (a QR-paired session that stays
+  open). It must NOT run inside a Next.js request handler — the live
+  integration is a separate WhatsApp worker process that `whatsapp.ts` talks
+  to. A working standalone reference is `scripts/whatsapp-test.mjs`.
 
 ## Auth and Access Model
 

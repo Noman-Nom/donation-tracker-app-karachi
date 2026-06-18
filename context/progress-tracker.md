@@ -37,6 +37,10 @@ Update this file after every meaningful implementation change.
   "Run reminder check" button + "Notified" column on Payments page.
   Verified: sends to unpaid only, skips paid, idempotent on re-run.
   Build passes.
+- Real WhatsApp send (proof): `scripts/whatsapp-test.mjs` connects via
+  Baileys and sends a real message after a one-time QR scan. Verified to the
+  QR/handshake stage. Added dep `qrcode-terminal`; npm scripts `test:api`
+  and `wa:test`. NOT yet wired into the app — app still uses simulate mode.
 
 ## In Progress
 
@@ -52,6 +56,13 @@ Update this file after every meaningful implementation change.
 - Reminder cron is manual-trigger only for the demo. For production, wire
   `runReminderCheck()` to node-cron (needs a long-running server) or a
   scheduled job / external cron hitting `POST /api/reminders/run`.
+- Baileys live-send learnings (needed when wiring the "live" branch of
+  `src/lib/whatsapp.ts`): (1) Baileys is CommonJS — factory is
+  `baileys.default`; (2) needs a global `crypto` polyfill on older Node
+  (`globalThis.crypto = webcrypto`); (3) must pass `version` from
+  `fetchLatestBaileysVersion()` or WhatsApp rejects the handshake; (4) the
+  connection must stay alive across requests — run as a separate WhatsApp
+  worker process, not inside a Next.js request handler.
 
 ## Notes for next session
 
@@ -81,5 +92,6 @@ Update this file after every meaningful implementation change.
 - Stack confirmed implicitly by running `npm install` on the generated
   package.json. Senior's explicit confirmation on auth/month-range still
   pending (see Open Questions).
-- Postgres connection not yet configured — `DATABASE_URL` in `.env` must be
-  set before `db:migrate`.
+- Neon Postgres is connected and migrated. `.env` holds `DATABASE_URL`
+  (pooled) + `DIRECT_URL` (direct, for migrations). The DB password was
+  shared in plaintext during setup — rotate it in Neon before production.
